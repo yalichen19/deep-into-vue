@@ -45,3 +45,6 @@ renderMixin(Vue)        // 原型注入$nextTick、_render方法
 可以看出，构造函数中没有什么关键代码，之后几个方法的调用真正给Vue添加了关键属性和方法
 
 接下来就是对每个方法单独分析
+
+# 其他相关知识点
+task 和 microtask 讲解文章 [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/). 
