@@ -502,7 +502,7 @@ if (inBrowser) {
     Object.defineProperty(opts, 'passive', ({
       get: function get () {
         /* istanbul ignore next */
-        
+
       }
     })); // https://github.com/facebook/flow/issues/285
     window.addEventListener('test-passive', null, opts);
@@ -3039,15 +3039,20 @@ function callActivatedHooks (queue) {
  * Jobs with duplicate IDs will be skipped unless it's
  * pushed when the queue is being flushed.
  */
+/*yl-comment: 将一个观察者对象push进观察者队列，在队列中已经存在相同的id则该观察者对象将被跳过，除非它是在队列被刷新时推送
+Watch对象并不是立即更新视图，而是被push进了一个队列queue，此时状态处于waiting的状态，这时候会继续会有Watch对象被push进这个队列queue，
+等到下一个tick运行时，这些Watch对象才会被遍历取出，更新视图。同时，id重复的Watcher不会被多次加入到queue中去，因为在最终渲染时，我们只需要关心数据的最终结果。*/
 function queueWatcher (watcher) {
   var id = watcher.id;
   if (has[id] == null) {
     has[id] = true;
     if (!flushing) {
+      /*yl-comment:如果没有flush掉，直接push到队列中即可*/
       queue.push(watcher);
     } else {
       // if already flushing, splice the watcher based on its id
       // if already past its id, it will be run next immediately.
+      /* yl-comment: 在index之后找到位置插入watcher, id是从小到大 */
       var i = queue.length - 1;
       while (i > index && queue[i].id > watcher.id) {
         i--;
@@ -6659,12 +6664,12 @@ if (hasTransition) {
   if (window.ontransitionend === undefined &&
     window.onwebkittransitionend !== undefined
   ) {
-    
+
   }
   if (window.onanimationend === undefined &&
     window.onwebkitanimationend !== undefined
   ) {
-    
+
   }
 }
 
