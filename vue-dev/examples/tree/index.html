@@ -36,6 +36,7 @@
           <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
         </div>
         <ul v-show="open" v-if="isFolder">
+          <!-- item组件嵌套了自身 -->
           <item
             class="item"
             v-for="model in model.children"

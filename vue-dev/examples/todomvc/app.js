@@ -2,6 +2,7 @@
 // and hash-based routing in ~150 lines.
 
 // localStorage persistence
+// 对storage的操作应该单独封装
 var STORAGE_KEY = 'todos-vuejs-2.0'
 var todoStorage = {
   fetch: function () {
@@ -98,6 +99,7 @@ var app = new Vue({
     },
 
     removeTodo: function (todo) {
+      // 可以直接通过 indexOf 查找元素，前提是元素是对象
       this.todos.splice(this.todos.indexOf(todo), 1)
     },
 
@@ -130,7 +132,9 @@ var app = new Vue({
   // a custom directive to wait for the DOM to be updated
   // before focusing on the input field.
   // https://vuejs.org/guide/custom-directive.html
+  // 自定义指令
   directives: {
+    // 直接绑定函数相当于绑定在bind和update钩子上
     'todo-focus': function (el, binding) {
       if (binding.value) {
         el.focus()
@@ -141,6 +145,7 @@ var app = new Vue({
 
 // handle routing
 function onHashChange () {
+  // 兼容 '#/' 的hash写法
   var visibility = window.location.hash.replace(/#\/?/, '')
   if (filters[visibility]) {
     app.visibility = visibility
